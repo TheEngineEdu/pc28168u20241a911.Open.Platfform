@@ -1,5 +1,5 @@
-﻿using Acme.CatchUp.Platform.News.Domain.Model.Aggregates;
-using Acme.CatchUp.Platform.News.Domain.Model.ValueObjects;
+﻿using pc28168u20241a911.Open.Platfform.Settlements.Domain.Model.Aggregates;
+using pc28168u20241a911.Open.Platfform.Settlements.Domain.Model.ValueObjects;
 using Acme.CatchUp.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Acme.CatchUp.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -18,19 +18,22 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<FavoriteSource>().HasKey(f => f.Id);
-        builder.Entity<FavoriteSource>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<FavoriteSource>()
-            .Property(f => f.SourceId)
-            .HasConversion(valueObject => valueObject.Value, value => new SourceId(value))
-            .IsRequired();
-        builder.Entity<FavoriteSource>()
-            .Property(f => f.NewsApiKey)
-            .HasConversion(valueObject => valueObject.Value, value => new NewsApiKey(value))
-            .IsRequired();
-        builder.Entity<FavoriteSource>()
-            .HasIndex(f => new { f.NewsApiKey, f.SourceId })
-            .IsUnique();
+        builder.Entity<DisbursementOrder>(entity =>
+        {
+            entity.HasKey(order => order.Id);
+            entity.Property(order => order.Id).IsRequired().ValueGeneratedOnAdd();
+            entity.Property(order => order.DisbursementOrderId)
+                .HasConversion(valueObject => valueObject.Value, value => new DisbursementOrderId(value))
+                .IsRequired();
+            entity.Property(order => order.TransferCap)
+                .HasConversion(valueObject => valueObject.Value, value => new FinancialAmount(value))
+                .IsRequired();
+            entity.Property(order => order.OrderTrackingCode)
+                .HasConversion(valueObject => valueObject.Value, value => new OpenpayReference(value))
+                .IsRequired();
+            entity.Property(order => order.Status).IsRequired();
+            entity.HasIndex(order => order.DisbursementOrderId).IsUnique();
+        });
 
         builder.UseSnakeCaseNamingConvention();
     }

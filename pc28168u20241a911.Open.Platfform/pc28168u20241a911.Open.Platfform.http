@@ -1,0 +1,6 @@
+@pc28168u20241a911.Open.Platfform_HostAddress = http://localhost:5178
+
+GET {{pc28168u20241a911.Open.Platfform_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

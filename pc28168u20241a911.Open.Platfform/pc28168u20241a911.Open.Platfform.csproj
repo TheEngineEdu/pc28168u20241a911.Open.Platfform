@@ -19,4 +19,9 @@
         <PackageReference Include="Scalar.AspNetCore" Version="2.18.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Settlements\interfaces\Rest\Resource\" />
+      <Folder Include="Settlements\interfaces\Rest\Transform\" />
+    </ItemGroup>
+
 </Project>

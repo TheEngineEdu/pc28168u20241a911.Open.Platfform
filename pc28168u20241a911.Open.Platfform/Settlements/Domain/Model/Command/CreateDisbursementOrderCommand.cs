@@ -7,4 +7,3 @@ public record CreateDisbursementOrderCommand(
     DisbursementOrderId Id,
     OpenpayReference OrderTrackingCode,
     DisbursementStatus Status);
-    

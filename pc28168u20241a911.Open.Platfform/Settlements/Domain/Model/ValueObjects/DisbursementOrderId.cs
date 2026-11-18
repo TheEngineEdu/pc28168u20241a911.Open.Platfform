@@ -16,8 +16,5 @@ public sealed record DisbursementOrderId
     }
 
     public string Value { get; }
-
     public override string ToString() => Value;
 }
-
-
